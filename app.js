@@ -740,12 +740,13 @@ mobileExportBtn.addEventListener('click', downloadSqliteFile);
 // 10. HELPER FUNCTIONS & UI UTILITIES
 // =========================================================================
 function formatCurrency(amount) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
+  const num = Number(amount) || 0;
+  const isNegative = num < 0;
+  const formatted = new Intl.NumberFormat('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
-  }).format(amount);
+  }).format(Math.abs(num));
+  return `${isNegative ? '-' : ''}${formatted} DH`;
 }
 
 function formatDate(dateString) {

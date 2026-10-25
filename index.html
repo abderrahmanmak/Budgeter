@@ -276,7 +276,7 @@
             </div>
           </div>
           <div class="mt-4">
-            <h3 id="totalBalance" class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">$0.00</h3>
+            <h3 id="totalBalance" class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">0.00 DH</h3>
             <div class="mt-2 flex items-center text-xs">
               <span id="balanceStatusBadge" class="inline-flex items-center px-2 py-0.5 rounded-full font-medium bg-slate-100 text-slate-700">
                 Balanced
@@ -298,7 +298,7 @@
             </div>
           </div>
           <div class="mt-4">
-            <h3 id="totalIncome" class="text-2xl sm:text-3xl font-extrabold text-emerald-700 tracking-tight">+$0.00</h3>
+            <h3 id="totalIncome" class="text-2xl sm:text-3xl font-extrabold text-emerald-700 tracking-tight">+0.00 DH</h3>
             <p id="incomeCount" class="mt-2 text-xs text-emerald-600/90 font-medium">0 records</p>
           </div>
           <div class="absolute bottom-0 left-0 right-0 h-1 bg-emerald-500"></div>
@@ -315,7 +315,7 @@
             </div>
           </div>
           <div class="mt-4">
-            <h3 id="totalExpenses" class="text-2xl sm:text-3xl font-extrabold text-rose-700 tracking-tight">-$0.00</h3>
+            <h3 id="totalExpenses" class="text-2xl sm:text-3xl font-extrabold text-rose-700 tracking-tight">-0.00 DH</h3>
             <p id="expenseCount" class="mt-2 text-xs text-rose-600/90 font-medium">0 records</p>
           </div>
           <div class="absolute bottom-0 left-0 right-0 h-1 bg-rose-500"></div>
@@ -395,10 +395,10 @@
             <!-- Amount -->
             <div>
               <label for="amount" class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">
-                Amount (dh) <span class="text-rose-500">*</span>
+                Amount (DH) <span class="text-rose-500">*</span>
               </label>
               <div class="relative">
-                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 font-semibold">dh</span>
+                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 font-semibold">DH</span>
                 <input 
                   type="number" 
                   id="amount" 
@@ -407,7 +407,7 @@
                   min="0.01" 
                   placeholder="0.00"
                   required
-                  class="w-full pl-8 pr-4 py-3 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-base sm:text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition"
+                  class="w-full pl-12 pr-4 py-3 sm:py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-base sm:text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition"
                 >
               </div>
               <p id="amountError" class="hidden text-xs text-rose-500 mt-1">Please enter an amount greater than 0.</p>
