@@ -88,6 +88,26 @@ const toastMessage = document.getElementById('toastMessage');
 // =========================================================================
 // 4. CENTRAL SERVER API CLIENT
 // =========================================================================
+function getApiBaseUrl() {
+  if (window.SPENDWISE_BACKEND_URL) return window.SPENDWISE_BACKEND_URL;
+  const savedUrl = localStorage.getItem('spendwise_backend_url');
+  if (savedUrl) return savedUrl;
+
+  // Local static file (file://) or IDE Live Server (e.g. port 5500) -> redirect to local backend
+  if (window.location.protocol === 'file:') {
+    return 'http://localhost:3000';
+  }
+  if (window.location.port && window.location.port !== '3000' && window.location.port !== '80' && window.location.port !== '443') {
+    const hostname = window.location.hostname || 'localhost';
+    return `http://${hostname}:3000`;
+  }
+
+  // Standard production (Vercel, Render, custom domain on port 80/443) -> relative URL
+  return '';
+}
+
+const API_BASE = getApiBaseUrl();
+
 const api = {
   token: localStorage.getItem('spendwise_token') || null,
 
@@ -110,8 +130,10 @@ const api = {
       headers['Authorization'] = `Bearer ${this.token}`;
     }
 
+    const targetUrl = endpoint.startsWith('http') ? endpoint : `${API_BASE}${endpoint}`;
+
     try {
-      const response = await fetch(endpoint, {
+      const response = await fetch(targetUrl, {
         ...options,
         headers
       });
@@ -119,13 +141,21 @@ const api = {
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(data.error || `Server request failed (Status: ${response.status})`);
+        let errorMsg = data.error;
+        if (!errorMsg) {
+          if (response.status === 404) {
+            errorMsg = `Server returned 404 Not Found on ${endpoint}. If using Live Server or file preview, please open http://localhost:3000 directly.`;
+          } else {
+            errorMsg = `Server request failed (Status: ${response.status})`;
+          }
+        }
+        throw new Error(errorMsg);
       }
 
       return data;
     } catch (err) {
       if (err.name === 'TypeError' && err.message.includes('fetch')) {
-        throw new Error('Unable to connect to SQLite server. Please ensure the server is running.');
+        throw new Error('Unable to connect to SpendWise backend on http://localhost:3000. Please ensure "npm start" is running.');
       }
       throw err;
     }
@@ -533,7 +563,7 @@ document.querySelectorAll('input[name="txType"]').forEach(radio => {
 
 function downloadSqliteFile() {
   // Direct file stream from central SQLite backend
-  window.location.href = '/api/export-db';
+  window.location.href = `${API_BASE}/api/export-db`;
   showToast('Downloading central SQLite database file...');
 }
 
